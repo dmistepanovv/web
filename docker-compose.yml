@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: web_app
+      POSTGRES_USER: web_user
+      POSTGRES_PASSWORD: web_password
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U web_user -d web_app"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - POSTGRES_DB=web_app
+      - POSTGRES_USER=web_user
+      - POSTGRES_PASSWORD=web_password
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - DEBUG=True
+      - SECRET_KEY=django-insecure-^88bj5*!a5%5b3ra(w+w7z&28!zzt5o^dser76ju*(w1jz1ik
+
+volumes:
+  postgres_data:
