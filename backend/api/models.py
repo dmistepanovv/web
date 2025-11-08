@@ -2,15 +2,16 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator
 
+class CustomUser(AbstractUser):
+    phone = models.CharField(max_length=20, blank=True, null=True, verbose_name="Телефон")
+    avatar = models.CharField(max_length=255, blank=True, null=True, verbose_name="Аватар (URL)")
 
-# Временно используем стандартную модель пользователя
-# class CustomUser(AbstractUser):
-#     phone = models.CharField(max_length=20, blank=True, null=True)
-#     avatar = models.CharField(max_length=255, blank=True, null=True, verbose_name="Аватар (URL)")
+    class Meta:
+        verbose_name = "Пользователь"
+        verbose_name_plural = "Пользователи"
 
-#     class Meta:
-#         verbose_name = "Пользователь"
-#         verbose_name_plural = "Пользователи"
+    def __str__(self):
+        return self.username
 
 class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название")

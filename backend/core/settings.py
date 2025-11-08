@@ -86,7 +86,7 @@ USE_I18N = True
 USE_TZ = True
 
 # Настройки аутентификации
-#AUTH_USER_MODEL = 'api.CustomUser'
+AUTH_USER_MODEL = 'api.CustomUser'
 
 # Добавляем настройки REST Framework
 REST_FRAMEWORK = {

@@ -1,16 +1,14 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Category, Product, SupportContact, TeamMember
+from .models import Category, Product, SupportContact, TeamMember, CustomUser
 
-# Временно закомментируем CustomUser
-# from .models import CustomUser
-
-# @admin.register(CustomUser)
-# class CustomUserAdmin(UserAdmin):
-#     list_display = ('username', 'email', 'first_name', 'last_name', 'phone', 'is_staff')
-#     fieldsets = UserAdmin.fieldsets + (
-#         ('Дополнительная информация', {'fields': ('phone', 'avatar')}),
-#     )
+@admin.register(CustomUser)
+class CustomUserAdmin(UserAdmin):
+    list_display = ('username', 'email', 'first_name', 'last_name', 'phone', 'is_staff')
+    search_fields = ('username', 'email', 'first_name', 'last_name')
+    fieldsets = UserAdmin.fieldsets + (
+        ('Дополнительная информация', {'fields': ('phone', 'avatar')}),
+    )
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
