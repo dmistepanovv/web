@@ -6,7 +6,6 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-^88bj5*!a5%5b3ra(w+w7z&28!zzt5o^dser76ju*(w1jz1iki')
 
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
@@ -88,7 +87,7 @@ USE_TZ = True
 # Настройки аутентификации
 AUTH_USER_MODEL = 'api.CustomUser'
 
-# Добавляем настройки REST Framework
+# Настройки REST Framework
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
