@@ -8,6 +8,17 @@ class Command(BaseCommand):
     help = 'Заполняет базу данных тестовыми данными'
 
     def handle(self, *args, **options):
+        # Создаем суперпользователя
+        if not User.objects.filter(username='admin').exists():
+            User.objects.create_superuser(
+                username='admin',
+                email='admin@strawberries.ru',
+                password='admin',
+                first_name='Администратор',
+                last_name='Системы'
+            )
+            self.stdout.write(self.style.SUCCESS('Суперпользователь создан: admin/admin'))
+
         # Создаем тестового пользователя
         user, created = User.objects.get_or_create(
             username='testuser',
@@ -33,7 +44,6 @@ class Command(BaseCommand):
             description="Иностранные автомобили с историей"
         )
 
-        # Создаем товары с путями к изображениям
         products_data = [
             {
                 'name': 'ВАЗ 2101 "Копейка"',
@@ -42,7 +52,7 @@ class Command(BaseCommand):
                 'category': russian_cat,
                 'category_type': 'russian',
                 'year': 1973,
-                'image_url': '/assets/img/2101.png'
+                'image_url': '/static/assets/img/2101.png'
             },
             {
                 'name': 'ИЖ Планета-4',
@@ -51,7 +61,7 @@ class Command(BaseCommand):
                 'category': russian_cat,
                 'category_type': 'russian',
                 'year': 1985,
-                'image_url': '/assets/img/IJ4.png'
+                'image_url': '/static/assets/img/IJ4.png'
             },
             {
                 'name': 'УАЗ-469',
@@ -60,7 +70,7 @@ class Command(BaseCommand):
                 'category': russian_cat,
                 'category_type': 'russian',
                 'year': 1990,
-                'image_url': '/assets/img/uaz469.jpg'
+                'image_url': '/static/assets/img/uaz469.jpg'
             },
             {
                 'name': 'Volkswagen Golf II',
@@ -69,15 +79,20 @@ class Command(BaseCommand):
                 'category': foreign_cat,
                 'category_type': 'foreign',
                 'year': 1990,
-                'image_url': '/assets/img/golf2.jpg'
+                'image_url': '/static/assets/img/golf2.jpg'
             },
         ]
 
         for product_data in products_data:
-            Product.objects.get_or_create(
+            product, created = Product.objects.get_or_create(
                 name=product_data['name'],
                 defaults=product_data
             )
+            if not created:
+                # Обновляем существующие записи
+                for key, value in product_data.items():
+                    setattr(product, key, value)
+                product.save()
 
         # Создаем контакты поддержки
         contacts_data = [
@@ -96,14 +111,13 @@ class Command(BaseCommand):
                 defaults=contact_data
             )
 
-        # Создаем команду с путями к фото
         team_data = [
             {
                 'name': 'Иван Петров',
                 'position': 'Генеральный директор',
                 'bio': 'Основатель маркетплейса. Автомобильный эксперт с 15-летним опытом.',
                 'email': 'ivan@strawberries.ru',
-                'photo_url': '/assets/img/admin1.jpg',
+                'photo_url': '/static/assets/img/admin1.jpg',
                 'order': 1
             },
             {
@@ -111,7 +125,7 @@ class Command(BaseCommand):
                 'position': 'Менеджер по продажам',
                 'bio': 'Специалист по подбору и оценке ретро-автомобилей. Работает с 2018 года.',
                 'email': 'artur@strawberries.ru',
-                'photo_url': '/assets/img/admin2.jpg',
+                'photo_url': '/static/assets/img/admin2.jpg',
                 'order': 2
             },
             {
@@ -119,16 +133,21 @@ class Command(BaseCommand):
                 'position': 'Технический специалист',
                 'bio': 'Механик с 20-летним стажем. Проводит техническую экспертизу всех лотов.',
                 'email': 'alexey@strawberries.ru',
-                'photo_url': '/assets/img/admin3.jpg',
+                'photo_url': '/static/assets/img/admin3.jpg',
                 'order': 3
             },
         ]
 
         for member_data in team_data:
-            TeamMember.objects.get_or_create(
+            member, created = TeamMember.objects.get_or_create(
                 name=member_data['name'],
                 defaults=member_data
             )
+            if not created:
+                # Обновляем существующие записи
+                for key, value in member_data.items():
+                    setattr(member, key, value)
+                member.save()
 
         # Создаем тестовые отзывы
         feedback_data = [

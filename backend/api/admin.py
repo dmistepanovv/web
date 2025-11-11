@@ -22,6 +22,18 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ('name', 'description')
     list_editable = ('price', 'is_available')
     readonly_fields = ('created_at', 'updated_at')
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('name', 'description', 'price', 'category', 'category_type')
+        }),
+        ('Изображения', {
+            'fields': ('image', 'image_url'),
+            'description': 'Загрузите изображение или укажите URL. Приоритет у загруженного изображения.'
+        }),
+        ('Дополнительно', {
+            'fields': ('year', 'is_available', 'created_at', 'updated_at')
+        }),
+    )
 
 @admin.register(SupportContact)
 class SupportContactAdmin(admin.ModelAdmin):

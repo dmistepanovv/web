@@ -1,3 +1,4 @@
+# backend/core/settings.py
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -11,7 +12,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-^88bj5*!a5%5b3ra(w+w7z&28!
 
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', 'web']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', 'web', 'backend']
 
 # Application definition
 INSTALLED_APPS = [
@@ -129,13 +130,18 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 }
 
-# Настройки медиа файлов
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# Static files (CSS, JavaScript, Images)
+# Настройки статических файлов
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Папки, где Django ищет статические файлы
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+# Настройки медиа файлов (для загружаемых пользователями файлов)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

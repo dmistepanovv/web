@@ -46,7 +46,10 @@ class Product(models.Model):
         default='russian',
         verbose_name="Тип категории"
     )
+
+    image = models.ImageField(upload_to='products/', blank=True, null=True, verbose_name="Изображение")
     image_url = models.CharField(max_length=500, blank=True, null=True, verbose_name="Ссылка на изображение")
+
     year = models.IntegerField(
         verbose_name="Год выпуска",
         blank=True,

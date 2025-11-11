@@ -6,18 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="580430d5-19f2-4fb5-96a9-e5e2abc5a430" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile.backend" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile.backend" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/api/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/api/management/commands/seed_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/management/commands/seed_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/api/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/api/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/core/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/core/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/core/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/core/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/services/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/services/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/views/LoginView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/LoginView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/views/SupportView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/SupportView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,17 +57,20 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "D:/study/bstu/4 course/WEB/web_project",
+    "last_opened_file_path": "D:/study/bstu/4 course/WEB/web_project/backend/static/assets/img",
     "settings.editor.selected.configurable": "reference.settingsdialog.project.grazie"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\study\bstu\4 course\WEB\web_project\backend\static\assets\img" />
+      <recent name="D:\study\bstu\4 course\WEB\web_project\backend\staticfiles" />
+      <recent name="D:\study\bstu\4 course\WEB\web_project\backend" />
       <recent name="D:\study\bstu\4 course\WEB\web_project" />
-      <recent name="D:\study\bstu\4 course\WEB\web_project\backend\api\management" />
-      <recent name="D:\study\bstu\4 course\WEB\web_project\backend\api\management\commands" />
+      <recent name="D:\study\bstu\4 course\WEB\web_project\backend\media" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\study\bstu\4 course\WEB\web_project\backend\media" />
       <recent name="D:\study\bstu\4 course\WEB\web_project\backend\backend" />
     </key>
   </component>

@@ -55,10 +55,18 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     category_name = serializers.CharField(source='category.name', read_only=True)
+    image_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
         fields = '__all__'
+
+    def get_image_url(self, obj):
+        # Если есть загруженное изображение - возвращаем его URL
+        if obj.image and hasattr(obj.image, 'url'):
+            return obj.image.url
+        # Иначе возвращаем image_url из базы
+        return obj.image_url
 
 class SupportContactSerializer(serializers.ModelSerializer):
     class Meta:
