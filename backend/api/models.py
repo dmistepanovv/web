@@ -85,6 +85,17 @@ class Product(models.Model):
         null=True,
         validators=[MinValueValidator(1900), MaxValueValidator(2025)]
     )
+
+    fuel_consumption = models.CharField(max_length=50, blank=True, null=True, verbose_name="Расход топлива")
+    max_speed = models.CharField(max_length=50, blank=True, null=True, verbose_name="Максимальная скорость")
+    engine_power = models.CharField(max_length=50, blank=True, null=True, verbose_name="Мощность двигателя")
+    transmission = models.CharField(max_length=50, blank=True, null=True, verbose_name="Коробка передач")
+    drive_type = models.CharField(max_length=50, blank=True, null=True, verbose_name="Привод")
+    color = models.CharField(max_length=50, blank=True, null=True, verbose_name="Цвет")
+    mileage = models.CharField(max_length=50, blank=True, null=True, verbose_name="Пробег")
+    technical_condition = models.TextField(blank=True, null=True, verbose_name="Техническое состояние")
+    features = models.TextField(blank=True, null=True, verbose_name="Особенности")
+
     is_available = models.BooleanField(default=True, verbose_name="Доступен")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")

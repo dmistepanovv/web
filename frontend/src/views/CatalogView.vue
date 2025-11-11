@@ -1,40 +1,101 @@
 <template>
   <div class="catalog-section">
-    <h3>🪆 Российская техника</h3>
-    <div class="about-section">
-      <p>Легендарные автомобили и мотоциклы советской и российской эпохи</p>
-      <p>Данная техника пользуется большим спросом во всех странах СНГ</p>
-    </div>
-
-    <div v-if="loading" class="loading">Загрузка...</div>
-    <div v-else class="products">
-      <div v-for="product in russianProducts" :key="product.id" class="product-card">
-        <h4>{{ product.name }}</h4>
-        <p>{{ product.description }}</p>
-        <img :src="getImageUrl(product.image_url)" :alt="product.name">
-        <div class="price">{{ formatPrice(product.price) }} ₽</div>
-        <div class="year">Год: {{ product.year }}</div>
-        <button class="buy-btn">Подробнее</button>
+    <!-- Поисковая строка -->
+    <div class="search-container">
+      <div class="search-box">
+        <input
+            type="text"
+            v-model="searchQuery"
+            placeholder="Поиск товаров по названию, описанию или категории..."
+            @input="handleSearch"
+            class="search-input"
+        >
+        <span class="search-icon">🔍</span>
+      </div>
+      <div class="search-results-info" v-if="searchQuery">
+        Найдено товаров: {{ totalProducts }}
       </div>
     </div>
-  </div>
 
-  <div class="catalog-section">
-    <h3>🚗 Иномарки</h3>
-    <div class="about-section">
-      <p>Иностранные автомобили с историей</p>
-      <p>Данная техника является эксклюзивной, её выбирают истинные любители</p>
+    <div class="catalog-filters">
+      <button
+          class="filter-btn"
+          :class="{ active: activeFilter === 'all' }"
+          @click="setFilter('all')"
+      >
+        Все товары
+      </button>
+      <button
+          class="filter-btn"
+          :class="{ active: activeFilter === 'russian' }"
+          @click="setFilter('russian')"
+      >
+        🇷🇺 Российские
+      </button>
+      <button
+          class="filter-btn"
+          :class="{ active: activeFilter === 'foreign' }"
+          @click="setFilter('foreign')"
+      >
+        🚗 Иномарки
+      </button>
     </div>
 
     <div v-if="loading" class="loading">Загрузка...</div>
-    <div v-else class="products">
-      <div v-for="product in foreignProducts" :key="product.id" class="product-card">
-        <h4>{{ product.name }}</h4>
-        <p>{{ product.description }}</p>
-        <img :src="getImageUrl(product.image_url)" :alt="product.name">
-        <div class="price">{{ formatPrice(product.price) }} ₽</div>
-        <div class="year">Год: {{ product.year }}</div>
-        <button class="buy-btn">Подробнее</button>
+
+    <div v-else>
+      <!-- Российская техника -->
+      <div class="category-section" v-if="showRussian">
+        <h3>🪆 Российская техника</h3>
+        <div class="about-section">
+          <p>Легендарные автомобили и мотоциклы советской и российской эпохи</p>
+        </div>
+
+        <div class="products">
+          <div v-for="product in filteredRussianProducts" :key="product.id" class="product-card">
+            <h4>{{ product.name }}</h4>
+            <p>{{ product.description }}</p>
+            <img :src="getImageUrl(product.image_url)" :alt="product.name" @error="handleImageError">
+            <div class="price">{{ formatPrice(product.price) }} ₽</div>
+            <div class="year">Год: {{ product.year }}</div>
+            <button
+                class="buy-btn"
+                @click="$router.push({ name: 'product', params: { id: product.id } })"
+            >
+              Подробнее
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Иномарки -->
+      <div class="category-section" v-if="showForeign">
+        <h3>🚗 Иномарки</h3>
+        <div class="about-section">
+          <p>Иностранные автомобили с историей</p>
+        </div>
+
+        <div class="products">
+          <div v-for="product in filteredForeignProducts" :key="product.id" class="product-card">
+            <h4>{{ product.name }}</h4>
+            <p>{{ product.description }}</p>
+            <img :src="getImageUrl(product.image_url)" :alt="product.name" @error="handleImageError">
+            <div class="price">{{ formatPrice(product.price) }} ₽</div>
+            <div class="year">Год: {{ product.year }}</div>
+            <button
+                class="buy-btn"
+                @click="$router.push({ name: 'product', params: { id: product.id } })"
+            >
+              Подробнее
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Сообщение если ничего не найдено -->
+      <div v-if="!hasProducts && searchQuery" class="no-results">
+        <p>По запросу "{{ searchQuery }}" ничего не найдено</p>
+        <button @click="clearSearch" class="btn-secondary">Показать все товары</button>
       </div>
     </div>
   </div>
@@ -48,8 +109,49 @@ export default {
   data() {
     return {
       loading: false,
-      russianProducts: [],
-      foreignProducts: []
+      searchQuery: '',
+      activeFilter: 'all',
+      allProducts: [],
+      searchTimeout: null
+    }
+  },
+  computed: {
+    filteredRussianProducts() {
+      let products = this.allProducts.filter(p => p.category_type === 'russian')
+
+      if (this.searchQuery) {
+        products = this.filterProductsBySearch(products)
+      }
+
+      return products
+    },
+
+    filteredForeignProducts() {
+      let products = this.allProducts.filter(p => p.category_type === 'foreign')
+
+      if (this.searchQuery) {
+        products = this.filterProductsBySearch(products)
+      }
+
+      return products
+    },
+
+    showRussian() {
+      return (this.activeFilter === 'all' || this.activeFilter === 'russian') &&
+          this.filteredRussianProducts.length > 0
+    },
+
+    showForeign() {
+      return (this.activeFilter === 'all' || this.activeFilter === 'foreign') &&
+          this.filteredForeignProducts.length > 0
+    },
+
+    hasProducts() {
+      return this.filteredRussianProducts.length > 0 || this.filteredForeignProducts.length > 0
+    },
+
+    totalProducts() {
+      return this.filteredRussianProducts.length + this.filteredForeignProducts.length
     }
   },
   async mounted() {
@@ -59,20 +161,59 @@ export default {
     async loadProducts() {
       this.loading = true
       try {
-        // Загружаем российскую технику
-        const russianResponse = await productService.getProductsByCategoryType('russian')
-        this.russianProducts = russianResponse.data
-
-        // Загружаем иномарки
-        const foreignResponse = await productService.getProductsByCategoryType('foreign')
-        this.foreignProducts = foreignResponse.data
+        const response = await productService.getAllProducts()
+        this.allProducts = response.data
       } catch (error) {
         console.error('Ошибка загрузки продуктов:', error)
-        // Fallback на статические данные
-        this.loadStaticData()
       } finally {
         this.loading = false
       }
+    },
+
+    handleSearch() {
+      // Дебаунс поиска - ждем 300ms после последнего ввода
+      clearTimeout(this.searchTimeout)
+      this.searchTimeout = setTimeout(() => {
+        this.performSearch()
+      }, 300)
+    },
+
+    async performSearch() {
+      if (!this.searchQuery) {
+        await this.loadProducts()
+        return
+      }
+
+      this.loading = true
+      try {
+        const response = await productService.getAllProducts()
+        // Фильтруем на клиенте для простоты
+        this.allProducts = response.data.filter(product =>
+            product.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+            product.description.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+            (product.category && product.category.name.toLowerCase().includes(this.searchQuery.toLowerCase()))
+        )
+      } catch (error) {
+        console.error('Ошибка поиска:', error)
+      } finally {
+        this.loading = false
+      }
+    },
+
+    filterProductsBySearch(products) {
+      return products.filter(product =>
+          product.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          product.description.toLowerCase().includes(this.searchQuery.toLowerCase())
+      )
+    },
+
+    setFilter(filter) {
+      this.activeFilter = filter
+    },
+
+    clearSearch() {
+      this.searchQuery = ''
+      this.loadProducts()
     },
 
     getImageUrl(imageUrl) {
@@ -86,19 +227,8 @@ export default {
       return new Intl.NumberFormat('ru-RU').format(price)
     },
 
-    loadStaticData() {
-      // Fallback данные, если API недоступно
-      this.russianProducts = [
-        {
-          id: 1,
-          name: 'ВАЗ 2101 "Копейка"',
-          description: 'Легендарный автомобиль советской эпохи...',
-          price: 450000,
-          year: 1973,
-          image_url: '/src/assets/img/2101.png'
-        }
-        // ... остальные статические данные
-      ]
+    handleImageError(event) {
+      event.target.src = '/src/assets/img/placeholder.jpg'
     }
   }
 }
@@ -176,5 +306,112 @@ export default {
 
 .buy-btn:hover {
   transform: scale(1.05);
+}
+
+/* Для поиска*/
+.search-container {
+  margin-bottom: 30px;
+}
+
+.search-box {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto 15px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 15px 50px 15px 20px;
+  border: 2px solid #ddd;
+  border-radius: 25px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #D836C4;
+  box-shadow: 0 0 0 3px rgba(216, 54, 196, 0.1);
+}
+
+.search-icon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+}
+
+.search-results-info {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+}
+
+.catalog-filters {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  border: 2px solid #D836C4;
+  background: white;
+  color: #D836C4;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.filter-btn:hover {
+  background: #f8f9fa;
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  background: #D836C4;
+  color: white;
+}
+
+.category-section {
+  margin: 40px 0;
+}
+
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.no-results p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .search-input {
+    padding: 12px 45px 12px 15px;
+  }
+
+  .catalog-filters {
+    gap: 10px;
+  }
+
+  .filter-btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
 }
 </style>

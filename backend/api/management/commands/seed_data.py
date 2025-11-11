@@ -52,6 +52,10 @@ class Command(BaseCommand):
                 'category': russian_cat,
                 'category_type': 'russian',
                 'year': 1973,
+                'transmission': 'Механика, 5 передач',
+                'engine_power': '67 л.с.',
+                'mileage': '100000 км',
+                'drive_type': 'Передний',
                 'image_url': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/VAZ_2101_BW_2016-09-03_13-51-58.jpg/1200px-VAZ_2101_BW_2016-09-03_13-51-58.jpg'
             },
             {
@@ -61,6 +65,10 @@ class Command(BaseCommand):
                 'category': russian_cat,
                 'category_type': 'russian',
                 'year': 1985,
+                'transmission': 'Механика, 4 передачи',
+                'engine_power': '34 л.с.',
+                'mileage': '270000',
+                'drive_type': 'Зданий',
                 'image_url': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIlSPvISOM2BNuU69eGfpuJoXPQ4JQj1mxdQ&s'
             },
             {
@@ -70,6 +78,10 @@ class Command(BaseCommand):
                 'category': russian_cat,
                 'category_type': 'russian',
                 'year': 1990,
+                'transmission': 'Механика, 5 передач',
+                'engine_power': '80 л.с.',
+                'mileage': '420000',
+                'drive_type': 'Полный',
                 'image_url': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI7y6kneM9vPBahilosLEsswyEqesIx03k0g&s'
             },
             {
@@ -79,7 +91,37 @@ class Command(BaseCommand):
                 'category': foreign_cat,
                 'category_type': 'foreign',
                 'year': 1990,
+                'transmission': 'Механика, 5 передач',
+                'engine_power': '106 л.с.',
+                'mileage': '280000',
+                'drive_type': 'Передний',
                 'image_url': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSw8hL6Sb1R2YfT8vP8oxQIeeY4HzvauBUknw&s'
+            },
+            {
+                'name': 'BMW 5 серии 525d IV (E39) Рестайлинг',
+                'description': 'Немецкий седан 2002 года. Тот случай, когда пословица "Четыре колеса возят возят тело, а два душу" становится неуместной',
+                'price': 700000,
+                'category': foreign_cat,
+                'category_type': 'foreign',
+                'year': 2002,
+                'transmission': 'Автомат',
+                'engine_power': '130 л.с.',
+                'mileage': '595000',
+                'drive_type': 'Передний',
+                'image_url': 'https://a.d-cd.net/bVof-E8jnEeP4IzsKnM7oPMS9Uc-960.jpg'
+            },
+            {
+                'name': 'Skoda Octavia III (A7) Рестайлинг',
+                'description': 'Чешский лифтбек 2018 года. По тюнингу говорим сразу нет, мы стейджами не занимаемся!!!',
+                'price': 1600000,
+                'category': foreign_cat,
+                'category_type': 'foreign',
+                'year': 2018,
+                'transmission': 'Автомат',
+                'engine_power': '110 л.с.',
+                'mileage': '70000',
+                'drive_type': 'Передний',
+                'image_url': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFbEc_qMr7l5pBrh5NPc52zBYREiaw3T1q4Q&s'
             },
         ]
 

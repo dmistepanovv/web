@@ -27,9 +27,9 @@
     <div class="social-section">
       <h3>🌐 Мы в соцсетях</h3>
       <div class="social-links">
-        <a href="#" class="social-link vk">VKontakte</a>
-        <a href="#" class="social-link telegram">Telegram</a>
-        <a href="#" class="social-link youtube">YouTube</a>
+        <a href="https://vk.com/cars_podbor" class="social-link vk">VKontakte</a>
+        <a href="https://t.me/ildar_auto_podbor" class="social-link telegram">Telegram</a>
+        <a href="https://www.youtube.com/channel/UCG4yz4wtp2E5S62L06yqC9w" class="social-link youtube">YouTube</a>
       </div>
     </div>
 

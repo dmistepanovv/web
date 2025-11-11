@@ -20,4 +20,5 @@ urlpatterns = [
     path('auth/profile/', views.profile_view, name='profile'),
     path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('', include(router.urls)),
+    path('products/<int:pk>/detail/', views.product_detail, name='product_detail'),
 ]
