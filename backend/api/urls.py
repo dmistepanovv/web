@@ -10,6 +10,7 @@ router.register(r'support-contacts', views.SupportContactViewSet)
 router.register(r'team-members', views.TeamMemberViewSet)
 
 urlpatterns = [
+    path('', views.api_overview, name='api_overview'),
     path('test/', views.test_api, name='test_api'),
     path('static-data/', views.static_data_api, name='static_data'),
     path('', include(router.urls)),

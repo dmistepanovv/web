@@ -2,6 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
+from django.http import JsonResponse
 from .models import Category, Product, SupportContact, TeamMember
 from .serializers import (
     UserSerializer,
@@ -13,6 +14,20 @@ from .serializers import (
 
 User = get_user_model()
 
+@api_view(['GET'])
+def api_overview(request):
+    """Обзор доступных API endpoints"""
+    endpoints = {
+        'test': '/api/test/',
+        'static_data': '/api/static-data/',
+        'users': '/api/users/',
+        'categories': '/api/categories/',
+        'products': '/api/products/',
+        'products_by_type': '/api/products/by_category_type/?type=russian|foreign',
+        'support_contacts': '/api/support-contacts/',
+        'team_members': '/api/team-members/',
+    }
+    return Response(endpoints)
 
 # Простой API endpoint для тестирования
 @api_view(['GET'])

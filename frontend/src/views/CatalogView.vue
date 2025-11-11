@@ -1,88 +1,108 @@
 <template>
   <div class="catalog-section">
     <h3>🪆 Российская техника</h3>
-
     <div class="about-section">
       <p>Легендарные автомобили и мотоциклы советской и российской эпохи</p>
       <p>Данная техника пользуется большим спросом во всех странах СНГ</p>
-      <p></p>
     </div>
-    <div class="products">
-      <div class="product-card">
-        <h4>ВАЗ 2101 "Копейка"</h4>
-        <p>Легендарный автомобиль советской эпохи 1973 года выпуска. Полностью восстановлен, оригинальный двигатель. Отличное техническое состояние, все документы в порядке.</p>
-        <img src="@/assets/img/2101.png" alt="ВАЗ 2101">
-        <div class="price">450 000 ₽</div>
-        <button class="buy-btn">Подробнее</button>
-      </div>
 
-      <div class="product-card">
-        <h4>ИЖ Планета-4</h4>
-        <p>Культовый советский мотоцикл 1985 года. Надежный двигатель 350cc, классический дизайн. Полностью оригинальные детали, полная комплектация.</p>
-        <img src="@/assets/img/IJ4.png" alt="ИЖ Планета-4">
-        <div class="price">85 000 ₽</div>
-        <button class="buy-btn">Подробнее</button>
-      </div>
-
-      <div class="product-card">
-        <h4>УАЗ-469</h4>
-        <p>Внедорожник 1990 года. Легенда бездорожья. Полный привод, усиленная подвеска. Идеален для охоты и рыбалки.</p>
-        <img src="@/assets/img/uaz469.jpg" alt="УАЗ-469">
-        <div class="price">320 000 ₽</div>
-        <button class="buy-btn">Подробнее</button>
-      </div>
-
-      <div class="product-card">
-        <h4>Москвич-412</h4>
-        <p>Советский седан 1978 года. Редкий экземпляр в отличном состоянии. Полностью оригинальный салон.</p>
-        <img src="@/assets/img/moskvich412.jpg" alt="Москвич-412">
-        <div class="price">280 000 ₽</div>
-        <button class="buy-btn">Подробнее</button>
-      </div>
-      <div class="product-card">
-        <h4>Лада (ВАЗ) 2110</h4>
-        <p>Первая "иномарка", выпущенная на просторах России. Экономичность, неплохая динамика. Такая есть даже у нашего администратора!</p>
-        <img src="@/assets/img/vaz2110.jpg" alt="Лада (ВАЗ) 2110">
-        <div class="price">480 000 ₽</div>
-        <button class="buy-btn">Подробнее</button>
-      </div>
-      <div class="product-card">
-        <h4>Лада Аура</h4>
-        <p>Флагман российского автомобилестроения. Комфорт и эргономичность это про неё.</p>
-        <img src="@/assets/img/vazaura.jpg" alt="Лада Аура">
-        <div class="price">2 780 000 ₽</div>
+    <div v-if="loading" class="loading">Загрузка...</div>
+    <div v-else class="products">
+      <div v-for="product in russianProducts" :key="product.id" class="product-card">
+        <h4>{{ product.name }}</h4>
+        <p>{{ product.description }}</p>
+        <img :src="getImageUrl(product.image_url)" :alt="product.name">
+        <div class="price">{{ formatPrice(product.price) }} ₽</div>
+        <div class="year">Год: {{ product.year }}</div>
         <button class="buy-btn">Подробнее</button>
       </div>
     </div>
   </div>
 
   <div class="catalog-section">
-
     <h3>🚗 Иномарки</h3>
     <div class="about-section">
       <p>Иностранные автомобили с историей</p>
-      <p>Данная техника является эксклюзивной, её выбирают истинные любители </p>
+      <p>Данная техника является эксклюзивной, её выбирают истинные любители</p>
     </div>
 
-    <div class="products">
-      <div class="product-card">
-        <h4>Volkswagen Golf II</h4>
-        <p>Немецкий хэтчбек 1990 года. Культовая модель в отличном состоянии.</p>
-        <img src="@/assets/img/golf2.jpg" alt="Volkswagen Golf II">
-        <div class="price">350 000 ₽</div>
-        <button class="buy-btn">Подробнее</button>
-      </div>
-
-      <div class="product-card">
-        <h4>Ford Mustang 1968</h4>
-        <p>Американская легенда. V8 двигатель, полностью восстановлен.</p>
-        <img src="@/assets/img/mustang68.jpg" alt="Ford Mustang 1968">
-        <div class="price">2 500 000 ₽</div>
+    <div v-if="loading" class="loading">Загрузка...</div>
+    <div v-else class="products">
+      <div v-for="product in foreignProducts" :key="product.id" class="product-card">
+        <h4>{{ product.name }}</h4>
+        <p>{{ product.description }}</p>
+        <img :src="getImageUrl(product.image_url)" :alt="product.name">
+        <div class="price">{{ formatPrice(product.price) }} ₽</div>
+        <div class="year">Год: {{ product.year }}</div>
         <button class="buy-btn">Подробнее</button>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+import { productService } from '@/services/api'
+
+export default {
+  name: 'CatalogView',
+  data() {
+    return {
+      loading: false,
+      russianProducts: [],
+      foreignProducts: []
+    }
+  },
+  async mounted() {
+    await this.loadProducts()
+  },
+  methods: {
+    async loadProducts() {
+      this.loading = true
+      try {
+        // Загружаем российскую технику
+        const russianResponse = await productService.getProductsByCategoryType('russian')
+        this.russianProducts = russianResponse.data
+
+        // Загружаем иномарки
+        const foreignResponse = await productService.getProductsByCategoryType('foreign')
+        this.foreignProducts = foreignResponse.data
+      } catch (error) {
+        console.error('Ошибка загрузки продуктов:', error)
+        // Fallback на статические данные
+        this.loadStaticData()
+      } finally {
+        this.loading = false
+      }
+    },
+
+    getImageUrl(imageUrl) {
+      if (imageUrl) {
+        return imageUrl.startsWith('http') ? imageUrl : `http://localhost:8000${imageUrl}`
+      }
+      return '/src/assets/img/placeholder.jpg'
+    },
+
+    formatPrice(price) {
+      return new Intl.NumberFormat('ru-RU').format(price)
+    },
+
+    loadStaticData() {
+      // Fallback данные, если API недоступно
+      this.russianProducts = [
+        {
+          id: 1,
+          name: 'ВАЗ 2101 "Копейка"',
+          description: 'Легендарный автомобиль советской эпохи...',
+          price: 450000,
+          year: 1973,
+          image_url: '/src/assets/img/2101.png'
+        }
+        // ... остальные статические данные
+      ]
+    }
+  }
+}
+</script>
 
 <style>
 .catalog-section {

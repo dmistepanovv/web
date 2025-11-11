@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',  # Добавляем DRF
+    'django_extensions',
     'api',
 ]
 
@@ -97,13 +98,18 @@ REST_FRAMEWORK = {
     ],
 }
 
-# Настройки медиа файлов
+# Настройки для статических файлов
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Настройки для медиа файлов
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# Дополнительные папки для статических файлов
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, '../frontend/dist'),
+]
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
