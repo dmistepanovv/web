@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Category, Product, SupportContact, TeamMember, CustomUser
+from .models import Category, Product, SupportContact, TeamMember, CustomUser, Feedback
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
@@ -33,3 +33,11 @@ class SupportContactAdmin(admin.ModelAdmin):
 class TeamMemberAdmin(admin.ModelAdmin):
     list_display = ('name', 'position', 'email', 'order')
     list_editable = ('order',)
+
+@admin.register(Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'topic', 'created_at', 'is_processed')
+    list_filter = ('topic', 'is_processed', 'created_at')
+    search_fields = ('name', 'email', 'message')
+    list_editable = ('is_processed',)
+    readonly_fields = ('created_at',)

@@ -5,12 +5,16 @@
         <img src="@/assets/img/logo.png" alt="Логотип Strawberries"/>
         <h1> StrawBerries </h1>
       </div>
+      <div class="user-info" v-if="authStore.isLoggedIn">
+        <span>Добро пожаловать, {{ authStore.user?.first_name || authStore.user?.username }}!</span>
+        <button @click="handleLogout" class="logout-btn">Выйти</button>
+      </div>
     </div>
   </header>
   <nav>
     <div class="nav-content">
       <a><RouterLink to="/">Главная страница</RouterLink></a>
-      <a><RouterLink to="/login">Авторизация</RouterLink></a>
+      <a v-if="!authStore.isLoggedIn"><RouterLink to="/login">Авторизация</RouterLink></a>
       <a><RouterLink to="/catalog">Каталог</RouterLink></a>
       <a><RouterLink to="/support">Поддержка</RouterLink></a>
     </div>
@@ -27,6 +31,24 @@
     </div>
   </footer>
 </template>
+
+<script setup>
+import { useAuthStore } from '@/stores/auth'
+import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+
+const authStore = useAuthStore()
+const router = useRouter()
+
+onMounted(() => {
+  authStore.checkAuth()
+})
+
+const handleLogout = async () => {
+  await authStore.logout()
+  router.push('/')
+}
+</script>
 
 <style>
   /* общие настройки*/
@@ -130,6 +152,26 @@
   .footer-content {
     padding: 10px 20px;
   }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+    font-weight: bold;
+  }
+
+  .logout-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .logout-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
 </style>
-<script setup lang="ts">
-</script>

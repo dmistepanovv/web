@@ -5,40 +5,11 @@
 
     <div class="contact-grid">
       <!-- Контактная информация -->
-      <div class="contact-card">
-        <h3>🕒 График работы</h3>
+      <div class="contact-card" v-for="contact in supportContacts" :key="contact.id">
+        <h3>{{ getContactIcon(contact.type) }} {{ contact.title }}</h3>
         <div class="contact-info">
-          <p><strong>Пн-Пт:</strong> 9:00 - 20:00</p>
-          <p><strong>Сб-Вс:</strong> 10:00 - 18:00</p>
-          <p><strong>Технические перерывы:</strong> 13:00-14:00</p>
-        </div>
-      </div>
-
-      <div class="contact-card">
-        <h3>📞 Телефоны</h3>
-        <div class="contact-info">
-          <p><strong>Общие вопросы:</strong> 8-800-555-35-35</p>
-          <p><strong>Техподдержка:</strong> 8-800-555-35-36</p>
-          <p><strong>Продажи:</strong> 8-800-555-35-37</p>
-          <p><em>Звонок бесплатный по всей России</em></p>
-        </div>
-      </div>
-
-      <div class="contact-card">
-        <h3>✉️ Электронная почта</h3>
-        <div class="contact-info">
-          <p><strong>Общие вопросы:</strong> info@strawberries.ru</p>
-          <p><strong>Поддержка:</strong> support@strawberries.ru</p>
-          <p><strong>Партнерство:</strong> partner@strawberries.ru</p>
-        </div>
-      </div>
-
-      <div class="contact-card">
-        <h3>📍 Адрес магазина</h3>
-        <div class="contact-info">
-          <p><strong>г. Белгород, ул. Костюкова, д. 46</strong></p>
-          <p>ТЦ "ПОВ-ТАС", 4 этаж, павильон 429</p>
-          <p><em>Ближайшая автобусная остановка: Костюкова</em></p>
+          <p><strong>{{ contact.value }}</strong></p>
+          <p v-if="contact.description">{{ contact.description }}</p>
         </div>
       </div>
     </div>
@@ -66,39 +37,15 @@
     <div class="admins-section">
       <h3>👥 Наша команда</h3>
       <div class="admins-grid">
-        <div class="admin-card">
+        <div class="admin-card" v-for="member in teamMembers" :key="member.id">
           <div class="admin-photo">
-            <img src="@/assets/img/admin1.jpg" alt="Иван Петров">
+            <img :src="getImageUrl(member.photo_url)" :alt="member.name">
           </div>
           <div class="admin-info">
-            <h4>Иван Петров</h4>
-            <p class="admin-role">Генеральный директор</p>
-            <p class="admin-bio">Основатель маркетплейса. Автомобильный эксперт с 15-летним опытом.</p>
-            <p class="admin-contact">ivan@strawberries.ru</p>
-          </div>
-        </div>
-
-        <div class="admin-card">
-          <div class="admin-photo">
-            <img src="@/assets/img/admin2.jpg" alt="Артур Пирожков">
-          </div>
-          <div class="admin-info">
-            <h4>Артур Пирожков</h4>
-            <p class="admin-role">Менеджер по продажам</p>
-            <p class="admin-bio">Специалист по подбору и оценке ретро-автомобилей. Работает с 2018 года.</p>
-            <p class="admin-contact">artur@strawberries.ru</p>
-          </div>
-        </div>
-
-        <div class="admin-card">
-          <div class="admin-photo">
-            <img src="@/assets/img/admin3.jpg" alt="Алексей Козлов">
-          </div>
-          <div class="admin-info">
-            <h4>Алексей Козлов</h4>
-            <p class="admin-role">Технический специалист</p>
-            <p class="admin-bio">Механик с 20-летним стажем. Проводит техническую экспертизу всех лотов.</p>
-            <p class="admin-contact">alexey@strawberries.ru</p>
+            <h4>{{ member.name }}</h4>
+            <p class="admin-role">{{ member.position }}</p>
+            <p class="admin-bio">{{ member.bio }}</p>
+            <p class="admin-contact">{{ member.email }}</p>
           </div>
         </div>
       </div>
@@ -107,21 +54,21 @@
     <!-- Форма обратной связи -->
     <div class="feedback-section">
       <h3>💬 Форма обратной связи</h3>
-      <form class="feedback-form">
+      <form class="feedback-form" @submit.prevent="submitFeedback">
         <div class="form-row">
           <div class="form-group">
             <label for="name">Ваше имя:</label>
-            <input type="text" id="name" name="name" required placeholder="Иван Иванов">
+            <input type="text" id="name" v-model="feedback.name" required placeholder="Иван Иванов">
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required placeholder="ivan@example.com">
+            <input type="email" id="email" v-model="feedback.email" required placeholder="ivan@example.com">
           </div>
         </div>
 
         <div class="form-group">
           <label for="topic">Тема обращения:</label>
-          <select id="topic" name="topic" required>
+          <select id="topic" v-model="feedback.topic" required>
             <option value="">Выберите тему</option>
             <option value="general">Общий вопрос</option>
             <option value="technical">Техническая поддержка</option>
@@ -133,7 +80,7 @@
 
         <div class="form-group">
           <label for="message">Сообщение:</label>
-          <textarea id="message" name="message" required placeholder="Опишите ваш вопрос подробно..." rows="5"></textarea>
+          <textarea id="message" v-model="feedback.message" required placeholder="Опишите ваш вопрос подробно..." rows="5"></textarea>
         </div>
 
         <button type="submit" class="btn">Отправить сообщение</button>
@@ -141,6 +88,86 @@
     </div>
   </div>
 </template>
+
+<script>
+import { supportService, teamService, feedbackService } from '@/services/api'
+
+export default {
+  name: 'SupportView',
+  data() {
+    return {
+      supportContacts: [],
+      teamMembers: [],
+      feedback: {
+        name: '',
+        email: '',
+        topic: '',
+        message: ''
+      }
+    }
+  },
+  async mounted() {
+    await this.loadSupportContacts()
+    await this.loadTeamMembers()
+  },
+  methods: {
+    async loadSupportContacts() {
+      try {
+        const response = await supportService.getSupportContacts()
+        this.supportContacts = response.data
+      } catch (error) {
+        console.error('Ошибка загрузки контактов:', error)
+      }
+    },
+
+    async loadTeamMembers() {
+      try {
+        const response = await teamService.getTeamMembers()
+        this.teamMembers = response.data
+      } catch (error) {
+        console.error('Ошибка загрузки команды:', error)
+      }
+    },
+
+    async submitFeedback() {
+      try {
+        await feedbackService.createFeedback(this.feedback)
+        alert('Сообщение отправлено успешно!')
+        this.feedback = {
+          name: '',
+          email: '',
+          topic: '',
+          message: ''
+        }
+      } catch (error) {
+        console.error('Ошибка отправки сообщения:', error)
+        alert('Ошибка отправки сообщения. Попробуйте еще раз.')
+      }
+    },
+
+    getContactIcon(type) {
+      const icons = {
+        'phone': '📞',
+        'email': '✉️',
+        'address': '📍',
+        'schedule': '🕒'
+      }
+      return icons[type] || '📋'
+    },
+
+    getImageUrl(imageUrl) {
+      if (imageUrl) {
+        // Если путь начинается с /assets/, используем фронтенд
+        if (imageUrl.startsWith('/assets/')) {
+          return imageUrl
+        }
+        return `http://localhost:8000${imageUrl}`
+      }
+      return '/src/assets/img/placeholder.jpg'
+    }
+  }
+}
+</script>
 
 <style>
 .support-section {
@@ -162,7 +189,6 @@
   color: #666;
 }
 
-/* Контактная сетка */
 .contact-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -193,7 +219,6 @@
   line-height: 1.2;
 }
 
-/* Карта */
 .map-section {
   margin: 30px 0;
 }
@@ -221,7 +246,6 @@
   margin-bottom: 10px;
 }
 
-/* Социальные сети */
 .social-section {
   margin: 30px 0;
 }
@@ -259,7 +283,6 @@
   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-/* Администраторы */
 .admins-section {
   margin: 20px 0;
 }
@@ -328,7 +351,6 @@
   font-weight: bold;
 }
 
-/* Форма обратной связи */
 .feedback-section {
   margin: 30px 0;
   background: white;
@@ -365,9 +387,34 @@
   color: #333;
 }
 
+.feedback-form input,
+.feedback-form select,
 .feedback-form textarea {
-  padding: 5px 10px;
   width: 100%;
+  padding: 10px;
+  border: 2px solid #ddd;
   border-radius: 5px;
+  font-size: 1rem;
+}
+
+.feedback-form textarea {
+  resize: vertical;
+}
+
+.btn {
+  background: linear-gradient(135deg, #D836C4, #ee5a24);
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 </style>

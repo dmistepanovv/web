@@ -1,9 +1,8 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
-from api.models import Category, Product, SupportContact, TeamMember
+from api.models import Category, Product, SupportContact, TeamMember, Feedback
 
 User = get_user_model()
-
 
 class Command(BaseCommand):
     help = 'Заполняет базу данных тестовыми данными'
@@ -34,7 +33,7 @@ class Command(BaseCommand):
             description="Иностранные автомобили с историей"
         )
 
-        # Создаем товары
+        # Создаем товары с путями к изображениям
         products_data = [
             {
                 'name': 'ВАЗ 2101 "Копейка"',
@@ -97,13 +96,14 @@ class Command(BaseCommand):
                 defaults=contact_data
             )
 
-        # Создаем команду
+        # Создаем команду с путями к фото
         team_data = [
             {
                 'name': 'Иван Петров',
                 'position': 'Генеральный директор',
                 'bio': 'Основатель маркетплейса. Автомобильный эксперт с 15-летним опытом.',
                 'email': 'ivan@strawberries.ru',
+                'photo_url': '/assets/img/admin1.jpg',
                 'order': 1
             },
             {
@@ -111,6 +111,7 @@ class Command(BaseCommand):
                 'position': 'Менеджер по продажам',
                 'bio': 'Специалист по подбору и оценке ретро-автомобилей. Работает с 2018 года.',
                 'email': 'artur@strawberries.ru',
+                'photo_url': '/assets/img/admin2.jpg',
                 'order': 2
             },
             {
@@ -118,6 +119,7 @@ class Command(BaseCommand):
                 'position': 'Технический специалист',
                 'bio': 'Механик с 20-летним стажем. Проводит техническую экспертизу всех лотов.',
                 'email': 'alexey@strawberries.ru',
+                'photo_url': '/assets/img/admin3.jpg',
                 'order': 3
             },
         ]
@@ -126,6 +128,23 @@ class Command(BaseCommand):
             TeamMember.objects.get_or_create(
                 name=member_data['name'],
                 defaults=member_data
+            )
+
+        # Создаем тестовые отзывы
+        feedback_data = [
+            {
+                'name': 'Аркадий Парамонов',
+                'email': 'arcady@my.ru',
+                'topic': 'sales',
+                'message': 'У вас есть тепловозы в наличии?'
+            },
+        ]
+
+        for feedback_item in feedback_data:
+            Feedback.objects.get_or_create(
+                name=feedback_item['name'],
+                email=feedback_item['email'],
+                defaults=feedback_item
             )
 
         self.stdout.write(self.style.SUCCESS('Тестовые данные успешно добавлены!'))

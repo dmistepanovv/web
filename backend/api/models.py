@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class CustomUser(AbstractUser):
     phone = models.CharField(max_length=20, blank=True, null=True, verbose_name="Телефон")
@@ -25,7 +25,6 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-
 class Product(models.Model):
     CATEGORY_TYPE_CHOICES = [
         ('russian', 'Российская техника'),
@@ -48,7 +47,12 @@ class Product(models.Model):
         verbose_name="Тип категории"
     )
     image_url = models.CharField(max_length=500, blank=True, null=True, verbose_name="Ссылка на изображение")
-    year = models.IntegerField(verbose_name="Год выпуска", blank=True, null=True)
+    year = models.IntegerField(
+        verbose_name="Год выпуска",
+        blank=True,
+        null=True,
+        validators=[MinValueValidator(1900), MaxValueValidator(2025)]
+    )
     is_available = models.BooleanField(default=True, verbose_name="Доступен")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
@@ -59,7 +63,6 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-
 
 class SupportContact(models.Model):
     CONTACT_TYPE_CHOICES = [
@@ -83,7 +86,6 @@ class SupportContact(models.Model):
     def __str__(self):
         return f"{self.title} - {self.value}"
 
-
 class TeamMember(models.Model):
     name = models.CharField(max_length=100, verbose_name="Имя")
     position = models.CharField(max_length=100, verbose_name="Должность")
@@ -99,3 +101,28 @@ class TeamMember(models.Model):
 
     def __str__(self):
         return self.name
+
+# Добавляем модель для обратной связи
+class Feedback(models.Model):
+    TOPIC_CHOICES = [
+        ('general', 'Общий вопрос'),
+        ('technical', 'Техническая поддержка'),
+        ('sales', 'Вопрос по покупке'),
+        ('partnership', 'Партнерство'),
+        ('other', 'Другое'),
+    ]
+
+    name = models.CharField(max_length=100, verbose_name="Имя")
+    email = models.EmailField(verbose_name="Email")
+    topic = models.CharField(max_length=20, choices=TOPIC_CHOICES, verbose_name="Тема")
+    message = models.TextField(verbose_name="Сообщение")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    is_processed = models.BooleanField(default=False, verbose_name="Обработано")
+
+    class Meta:
+        verbose_name = "Обратная связь"
+        verbose_name_plural = "Обратная связь"
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.name} - {self.get_topic_display()}"

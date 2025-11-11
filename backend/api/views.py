@@ -1,35 +1,24 @@
 from rest_framework import viewsets, status
-from rest_framework.decorators import api_view, action
+from rest_framework.decorators import api_view, action, permission_classes
 from rest_framework.response import Response
-from django.contrib.auth import get_user_model
-from django.http import JsonResponse
-from .models import Category, Product, SupportContact, TeamMember
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.contrib.auth import get_user_model, authenticate
+from rest_framework_simplejwt.tokens import RefreshToken
+from .models import Category, Product, SupportContact, TeamMember, Feedback
 from .serializers import (
     UserSerializer,
     CategorySerializer,
     ProductSerializer,
     SupportContactSerializer,
-    TeamMemberSerializer
+    TeamMemberSerializer,
+    FeedbackSerializer,
+    RegisterSerializer,
+    LoginSerializer
 )
 
 User = get_user_model()
 
-@api_view(['GET'])
-def api_overview(request):
-    """Обзор доступных API endpoints"""
-    endpoints = {
-        'test': '/api/test/',
-        'static_data': '/api/static-data/',
-        'users': '/api/users/',
-        'categories': '/api/categories/',
-        'products': '/api/products/',
-        'products_by_type': '/api/products/by_category_type/?type=russian|foreign',
-        'support_contacts': '/api/support-contacts/',
-        'team_members': '/api/team-members/',
-    }
-    return Response(endpoints)
 
-# Простой API endpoint для тестирования
 @api_view(['GET'])
 def test_api(request):
     return Response({
@@ -42,7 +31,6 @@ def test_api(request):
     })
 
 
-# API endpoint со статическими данными
 @api_view(['GET'])
 def static_data_api(request):
     static_products = [
@@ -65,6 +53,60 @@ def static_data_api(request):
     })
 
 
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def register_view(request):
+    serializer = RegisterSerializer(data=request.data)
+    if serializer.is_valid():
+        user = serializer.save()
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            'user': UserSerializer(user).data,
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def login_view(request):
+    serializer = LoginSerializer(data=request.data)
+    if serializer.is_valid():
+        username = serializer.validated_data['username']
+        password = serializer.validated_data['password']
+        user = authenticate(username=username, password=password)
+
+        if user:
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'user': UserSerializer(user).data,
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            })
+        return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def logout_view(request):
+    try:
+        refresh_token = request.data["refresh_token"]
+        token = RefreshToken(refresh_token)
+        token.blacklist()
+        return Response(status=status.HTTP_205_RESET_CONTENT)
+    except Exception as e:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def profile_view(request):
+    serializer = UserSerializer(request.user)
+    return Response(serializer.data)
+
+
 # ViewSets для моделей
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
@@ -80,7 +122,6 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
-    # Дополнительный action для фильтрации по типу категории
     @action(detail=False, methods=['get'])
     def by_category_type(self, request):
         category_type = request.query_params.get('type', None)
@@ -99,3 +140,8 @@ class SupportContactViewSet(viewsets.ReadOnlyModelViewSet):
 class TeamMemberViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = TeamMember.objects.all()
     serializer_class = TeamMemberSerializer
+
+
+class FeedbackViewSet(viewsets.ModelViewSet):
+    queryset = Feedback.objects.all()
+    serializer_class = FeedbackSerializer
