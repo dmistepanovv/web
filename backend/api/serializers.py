@@ -24,8 +24,26 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ('username', 'password', 'password2', 'email', 'first_name', 'last_name', 'phone')
         extra_kwargs = {
             'first_name': {'required': True},
-            'last_name': {'required': True}
+            'last_name': {'required': True},
+            'phone': {'required': False}
         }
+
+    def validate_first_name(self, value):
+        if not value.replace(' ', '').replace('-', '').isalpha():
+            raise serializers.ValidationError("Имя может содержать только буквы, пробелы и дефис.")
+        return value
+
+    def validate_last_name(self, value):
+        if not value.replace(' ', '').replace('-', '').isalpha():
+            raise serializers.ValidationError("Фамилия может содержать только буквы, пробелы и дефис.")
+        return value
+
+    def validate_phone(self, value):
+        if value and not value.startswith('+7'):
+            raise serializers.ValidationError("Телефон должен начинаться с +7")
+        if value and len(value) != 12:
+            raise serializers.ValidationError("Телефон должен содержать 11 цифр после +7")
+        return value
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:

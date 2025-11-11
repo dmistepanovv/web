@@ -58,11 +58,27 @@
         <div class="form-row">
           <div class="form-group">
             <label for="name">Ваше имя:</label>
-            <input type="text" id="name" v-model="feedback.name" required placeholder="Иван Иванов">
+            <input
+                type="text"
+                id="name"
+                v-model="feedback.name"
+                required
+                placeholder="Иван Иванов"
+                :readonly="isLoggedIn"
+                :class="{ 'readonly-field': isLoggedIn }"
+            >
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" id="email" v-model="feedback.email" required placeholder="ivan@example.com">
+            <input
+                type="email"
+                id="email"
+                v-model="feedback.email"
+                required
+                placeholder="ivan@example.com"
+                :readonly="isLoggedIn"
+                :class="{ 'readonly-field': isLoggedIn }"
+            >
           </div>
         </div>
 
@@ -90,6 +106,7 @@
 </template>
 
 <script>
+import { useAuthStore } from '@/stores/auth'
 import { supportService, teamService, feedbackService } from '@/services/api'
 
 export default {
@@ -103,6 +120,33 @@ export default {
         email: '',
         topic: '',
         message: ''
+      }
+    }
+  },
+  computed: {
+    isLoggedIn() {
+      const authStore = useAuthStore()
+      return authStore.isLoggedIn
+    },
+    currentUser() {
+      const authStore = useAuthStore()
+      return authStore.user
+    }
+  },
+  watch: {
+    // Следим за изменением статуса авторизации
+    isLoggedIn: {
+      immediate: true,
+      handler(newVal) {
+        if (newVal && this.currentUser) {
+          // Автозаполняем данные для авторизованного пользователя
+          this.feedback.name = `${this.currentUser.first_name || ''} ${this.currentUser.last_name || ''}`.trim()
+          this.feedback.email = this.currentUser.email || ''
+        } else {
+          // Очищаем для неавторизованного
+          this.feedback.name = ''
+          this.feedback.email = ''
+        }
       }
     }
   },
@@ -133,9 +177,10 @@ export default {
       try {
         await feedbackService.createFeedback(this.feedback)
         alert('Сообщение отправлено успешно!')
+        // Сбрасываем форму, но для авторизованных сохраняем их данные
         this.feedback = {
-          name: '',
-          email: '',
+          name: this.isLoggedIn ? this.feedback.name : '',
+          email: this.isLoggedIn ? this.feedback.email : '',
           topic: '',
           message: ''
         }
@@ -157,11 +202,7 @@ export default {
 
     getImageUrl(imageUrl) {
       if (imageUrl) {
-        // Если путь начинается с /assets/, используем фронтенд
-        if (imageUrl.startsWith('/assets/')) {
-          return imageUrl
-        }
-        return `http://localhost:8000${imageUrl}`
+        return imageUrl
       }
       return '/src/assets/img/placeholder.jpg'
     }
@@ -416,5 +457,11 @@ export default {
 .btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.readonly-field {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 </style>

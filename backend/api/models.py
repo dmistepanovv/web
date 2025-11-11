@@ -1,10 +1,39 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
+
 
 class CustomUser(AbstractUser):
-    phone = models.CharField(max_length=20, blank=True, null=True, verbose_name="Телефон")
+    phone_validator = RegexValidator(
+        regex=r'^\+7\d{10}$',
+        message="Телефон должен быть в формате: '+7xxxxxxxxxx'."
+    )
+    name_validator = RegexValidator(
+        regex=r'^[a-zA-Zа-яА-ЯёЁ\- ]+$',
+        message="Имя и фамилия могут содержать только буквы, пробелы и дефис."
+    )
+
+    phone = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        verbose_name="Телефон",
+        validators=[phone_validator]
+    )
     avatar = models.CharField(max_length=255, blank=True, null=True, verbose_name="Аватар (URL)")
+
+    first_name = models.CharField(
+        max_length=150,
+        blank=True,
+        validators=[name_validator],
+        verbose_name="Имя"
+    )
+    last_name = models.CharField(
+        max_length=150,
+        blank=True,
+        validators=[name_validator],
+        verbose_name="Фамилия"
+    )
 
     class Meta:
         verbose_name = "Пользователь"

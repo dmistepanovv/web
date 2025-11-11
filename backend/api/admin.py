@@ -26,9 +26,9 @@ class ProductAdmin(admin.ModelAdmin):
         ('Основная информация', {
             'fields': ('name', 'description', 'price', 'category', 'category_type')
         }),
-        ('Изображения', {
-            'fields': ('image', 'image_url'),
-            'description': 'Загрузите изображение или укажите URL. Приоритет у загруженного изображения.'
+        ('Изображение', {
+            'fields': ('image_url',),
+            'description': 'Введите URL изображения из интернета. Например: https://example.com/image.jpg'
         }),
         ('Дополнительно', {
             'fields': ('year', 'is_available', 'created_at', 'updated_at')
@@ -45,6 +45,18 @@ class SupportContactAdmin(admin.ModelAdmin):
 class TeamMemberAdmin(admin.ModelAdmin):
     list_display = ('name', 'position', 'email', 'order')
     list_editable = ('order',)
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('name', 'position', 'bio', 'email')
+        }),
+        ('Фотография', {
+            'fields': ('photo_url',),
+            'description': 'Введите URL фотографии из интернета. Например: https://example.com/photo.jpg'
+        }),
+        ('Дополнительно', {
+            'fields': ('order',)
+        }),
+    )
 
 @admin.register(Feedback)
 class FeedbackAdmin(admin.ModelAdmin):

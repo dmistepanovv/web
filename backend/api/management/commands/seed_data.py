@@ -52,7 +52,7 @@ class Command(BaseCommand):
                 'category': russian_cat,
                 'category_type': 'russian',
                 'year': 1973,
-                'image_url': '/static/assets/img/2101.png'
+                'image_url': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/VAZ_2101_BW_2016-09-03_13-51-58.jpg/1200px-VAZ_2101_BW_2016-09-03_13-51-58.jpg'
             },
             {
                 'name': 'ИЖ Планета-4',
@@ -61,7 +61,7 @@ class Command(BaseCommand):
                 'category': russian_cat,
                 'category_type': 'russian',
                 'year': 1985,
-                'image_url': '/static/assets/img/IJ4.png'
+                'image_url': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIlSPvISOM2BNuU69eGfpuJoXPQ4JQj1mxdQ&s'
             },
             {
                 'name': 'УАЗ-469',
@@ -70,7 +70,7 @@ class Command(BaseCommand):
                 'category': russian_cat,
                 'category_type': 'russian',
                 'year': 1990,
-                'image_url': '/static/assets/img/uaz469.jpg'
+                'image_url': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI7y6kneM9vPBahilosLEsswyEqesIx03k0g&s'
             },
             {
                 'name': 'Volkswagen Golf II',
@@ -79,7 +79,7 @@ class Command(BaseCommand):
                 'category': foreign_cat,
                 'category_type': 'foreign',
                 'year': 1990,
-                'image_url': '/static/assets/img/golf2.jpg'
+                'image_url': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSw8hL6Sb1R2YfT8vP8oxQIeeY4HzvauBUknw&s'
             },
         ]
 
@@ -117,7 +117,7 @@ class Command(BaseCommand):
                 'position': 'Генеральный директор',
                 'bio': 'Основатель маркетплейса. Автомобильный эксперт с 15-летним опытом.',
                 'email': 'ivan@strawberries.ru',
-                'photo_url': '/static/assets/img/admin1.jpg',
+                'photo_url': 'https://img06.rl0.ru/afisha/e1200x1200i/daily.afisha.ru/uploads/images/b/1e/b1e04a4fe92b08a09ebb0eadbfc9e737.jpg',
                 'order': 1
             },
             {
@@ -125,7 +125,7 @@ class Command(BaseCommand):
                 'position': 'Менеджер по продажам',
                 'bio': 'Специалист по подбору и оценке ретро-автомобилей. Работает с 2018 года.',
                 'email': 'artur@strawberries.ru',
-                'photo_url': '/static/assets/img/admin2.jpg',
+                'photo_url': 'https://assets3.klops.ru/media/W1siZiIsIjIwMjFcLzA3XC8wNVwvNWNldWJwaHJ4aV9maWxlLmpwZWciXSxbInAiLCJ0aHVtYiIsIjc5MHg2MzYrMCswIl0sWyJwIiwidGh1bWIiLCI4NjB4Il0sWyJwIiwiZW5jb2RlIiwianBnIiwiLXF1YWxpdHkgODUgLXN0cmlwIC1pbnRlcmxhY2UgUGxhbmUiXV0=/file.jpg?sha=0bc2614edc4a8577',
                 'order': 2
             },
             {
@@ -133,7 +133,7 @@ class Command(BaseCommand):
                 'position': 'Технический специалист',
                 'bio': 'Механик с 20-летним стажем. Проводит техническую экспертизу всех лотов.',
                 'email': 'alexey@strawberries.ru',
-                'photo_url': '/static/assets/img/admin3.jpg',
+                'photo_url': 'https://wink.ru/blog/wp-content/uploads/2025/02/image13-819x1024.jpg',
                 'order': 3
             },
         ]

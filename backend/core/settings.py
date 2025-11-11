@@ -1,4 +1,3 @@
-# backend/core/settings.py
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -107,6 +106,11 @@ USE_TZ = True
 
 # Настройки аутентификации
 AUTH_USER_MODEL = 'api.CustomUser'
+
+AUTHENTICATION_BACKENDS = [
+    'api.backends.EmailOrUsernameModelBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # Настройки REST Framework
 REST_FRAMEWORK = {
