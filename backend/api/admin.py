@@ -31,7 +31,8 @@ class ProductAdmin(admin.ModelAdmin):
             'description': 'Введите URL изображения из интернета. Например: https://example.com/image.jpg'
         }),
         ('Дополнительно', {
-            'fields': ('year', 'is_available', 'created_at', 'updated_at')
+            'fields': ('year', 'fuel_consumption', 'max_speed', 'engine_power', 'transmission',
+                       'drive_type', 'color', 'mileage', 'technical_condition', 'features', 'is_available', 'created_at', 'updated_at')
         }),
     )
 

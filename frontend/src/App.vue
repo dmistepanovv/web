@@ -6,7 +6,7 @@
         <h1> StrawBerries </h1>
       </div>
       <div class="user-info" v-if="authStore.isLoggedIn">
-        <span>Добро пожаловать, {{ authStore.user?.first_name || authStore.user?.username }}!</span>
+        <span class="logout-info" >Добро пожаловать, {{ authStore.user?.first_name || authStore.user?.username }}!</span>
         <button @click="handleLogout" class="logout-btn">Выйти</button>
       </div>
     </div>
@@ -78,12 +78,12 @@ const handleLogout = async () => {
   header {
     background: linear-gradient(135deg, #D836C4, #ee5a24);
     color: white;
-    padding: 0.5rem 0;
+    padding: 5px 0;
     box-shadow: 0 2px 5px rgba(0,0,0,0.5);
   }
 
   .header-content {
-    padding: 1% 2%;
+    padding: 10px 20px;
     display: flex;
     align-items: center;
     gap: 20px;
@@ -108,18 +108,14 @@ const handleLogout = async () => {
   /* Навигация */
   .nav-content {
     margin: 1%;
-    padding: 0.5% 0;
+    padding: 10px 0;
     display: flex;
-    gap: 2%;
+    gap: 10px;
   }
 
   nav a {
     padding: 10px 15px;
     border-radius: 5px;
-  }
-
-  .router-link-active {
-    background-color: lightpink;
   }
 
   nav a:hover {
@@ -155,17 +151,24 @@ const handleLogout = async () => {
 
   .user-info {
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    gap: 4px;
     color: white;
     font-weight: bold;
+    margin-left: auto;
+  }
+
+  .logout-info {
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
   }
 
   .logout-btn {
     background: rgba(255, 255, 255, 0.2);
     color: white;
     border: 1px solid white;
-    padding: 0.5rem 1rem;
+    padding: 2px 10px;
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease;

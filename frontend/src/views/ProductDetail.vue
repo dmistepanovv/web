@@ -15,7 +15,8 @@
         <p class="description">{{ product.description }}</p>
 
         <div class="action-buttons">
-          <button class="btn-primary" @click="contactSeller">Связаться с продавцом</button>
+          <button class="btn-primary" @click="contactSeller"><RouterLink to="/support">Связаться с продавцом</RouterLink></button>
+
           <button class="btn-secondary" @click="$router.back()">Назад к каталогу</button>
         </div>
       </div>
@@ -154,9 +155,11 @@ export default {
 }
 
 .product-image img {
-  width: 100%;
+  max-width: 100%;
+  height: 300px;
+  object-fit: cover;
   border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  margin-top: 10px;
 }
 
 .product-info h1 {
@@ -165,14 +168,14 @@ export default {
 }
 
 .price {
-  font-size: 2rem;
+  font-size: 30px;
   color: #ee5a24;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin: 20px 20px;
 }
 
 .description {
-  font-size: 1.1rem;
+  font-size: 16px;
   line-height: 1.6;
   color: #666;
   margin-bottom: 30px;
@@ -191,7 +194,7 @@ export default {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 18px;
   transition: all 0.3s ease;
 }
 
@@ -202,7 +205,7 @@ export default {
   border: 1px solid #ddd;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 18px;
   transition: all 0.3s ease;
 }
 
@@ -219,13 +222,20 @@ export default {
   margin-bottom: 30px;
 }
 
-.technical-details h2, .additional-info h3 {
+.additional-info h3 {
   color: #333;
   margin-bottom: 20px;
 }
 
+.technical-details h2{
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
 .specs-grid {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 15px;
 }

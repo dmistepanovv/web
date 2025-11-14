@@ -58,9 +58,11 @@ class Command(BaseCommand):
                 'drive_type': 'Передний',
                 'image_url': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/VAZ_2101_BW_2016-09-03_13-51-58.jpg/1200px-VAZ_2101_BW_2016-09-03_13-51-58.jpg'
             },
+
+
             {
                 'name': 'ИЖ Планета-4',
-                'description': 'Культовый советский мотоцикл 1985 года. Надежный двигатель 350cc, классический дизайн. Полностью оригинальные детали, полная комплектация.',
+                'description': 'Культовый советский мотоцикл 1985 года. Надежный двигатель, классический дизайн. Полностью оригинальные детали, полная комплектация.',
                 'price': 85000,
                 'category': russian_cat,
                 'category_type': 'russian',
@@ -175,8 +177,16 @@ class Command(BaseCommand):
                 'position': 'Технический специалист',
                 'bio': 'Механик с 20-летним стажем. Проводит техническую экспертизу всех лотов.',
                 'email': 'alexey@strawberries.ru',
-                'photo_url': 'https://wink.ru/blog/wp-content/uploads/2025/02/image13-819x1024.jpg',
+                'photo_url': 'https://newcdn.igromania.ru/mnt/news/2/c/f/2/9/7/115210/d1020b677c03b727_original.jpg',
                 'order': 3
+            },
+            {
+                'name': 'Сильвестр Стальной',
+                'position': 'Менеджер закупок',
+                'bio': 'Достанет нужную технику практически из любой точки мира.',
+                'email': 'silva@strawberries.ru',
+                'photo_url': 'https://news.store.rambler.ru/img/56958f33bb011f2035d12b3572e37a9c?img-format=auto&img-1-resize=height:400,fit:max&img-2-filter=sharpen',
+                'order': 4
             },
         ]
 

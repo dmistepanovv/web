@@ -59,7 +59,7 @@
       <!-- Дополнительные поля для регистрации -->
       <div v-if="showRegister" class="form-row">
         <div class="form-group">
-          <label for="first_name">Имя</label>
+          <label for="first_name">Имя *</label>
           <input
               type="text"
               id="first_name"
@@ -69,7 +69,7 @@
         </div>
 
         <div class="form-group">
-          <label for="last_name">Фамилия</label>
+          <label for="last_name">Фамилия *</label>
           <input
               type="text"
               id="last_name"
