@@ -104,7 +104,9 @@ export default {
     async loadProduct() {
       this.loading = true
       try {
-        const productId = this.$route.params.id
+        const productId = this.$route.params.id // Получаем ID из URL
+
+        // GET запрос для одного товара
         const response = await productService.getProduct(productId)
         this.product = response.data
       } catch (error) {

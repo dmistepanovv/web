@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 
 
+# модель пользователя
 class CustomUser(AbstractUser):
     phone_validator = RegexValidator(
         regex=r'^\+7\d{10}$',
@@ -42,6 +43,7 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.username
 
+# модель категории
 class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название")
     description = models.TextField(blank=True, verbose_name="Описание")
@@ -54,6 +56,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+# модель товара
 class Product(models.Model):
     CATEGORY_TYPE_CHOICES = [
         ('russian', 'Российская техника'),
@@ -107,6 +110,7 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+# модель контактов поддержки
 class SupportContact(models.Model):
     CONTACT_TYPE_CHOICES = [
         ('phone', 'Телефон'),
@@ -129,6 +133,7 @@ class SupportContact(models.Model):
     def __str__(self):
         return f"{self.title} - {self.value}"
 
+# модель члена команды
 class TeamMember(models.Model):
     name = models.CharField(max_length=100, verbose_name="Имя")
     position = models.CharField(max_length=100, verbose_name="Должность")
@@ -145,7 +150,7 @@ class TeamMember(models.Model):
     def __str__(self):
         return self.name
 
-# Добавляем модель для обратной связи
+# модель для обратной связи
 class Feedback(models.Model):
     TOPIC_CHOICES = [
         ('general', 'Общий вопрос'),

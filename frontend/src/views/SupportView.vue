@@ -157,6 +157,7 @@ export default {
   methods: {
     async loadSupportContacts() {
       try {
+        // GET запрос для контактов поддержки
         const response = await supportService.getSupportContacts()
         this.supportContacts = response.data
       } catch (error) {
@@ -166,6 +167,7 @@ export default {
 
     async loadTeamMembers() {
       try {
+        // GET запрос для членов команды
         const response = await teamService.getTeamMembers()
         this.teamMembers = response.data
       } catch (error) {
@@ -175,6 +177,7 @@ export default {
 
     async submitFeedback() {
       try {
+        // POST запрос для отправки обратной связи
         await feedbackService.createFeedback(this.feedback)
         alert('Сообщение отправлено успешно!')
         // Сбрасываем форму, но для авторизованных сохраняем их данные

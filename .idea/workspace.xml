@@ -6,19 +6,30 @@
   <component name="ChangeListManager">
     <list default="true" id="580430d5-19f2-4fb5-96a9-e5e2abc5a430" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile.backend" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile.backend" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/apps.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/api/management/commands/seed_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/management/commands/seed_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/_metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/_metadata.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/chunk-LG6AQRJS.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/chunk-LG6AQRJS.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/pinia.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/pinia.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/pinia.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/pinia.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/vue-router.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/vue-router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/vue-router.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/vue-router.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.vite/deps/vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/static/assets/img/2101.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/static/assets/img/IJ4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/static/assets/img/admin1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/static/assets/img/admin2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/static/assets/img/admin3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/static/assets/img/admin4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/static/assets/img/golf2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/static/assets/img/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/static/assets/img/moskvich412.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/static/assets/img/mustang68.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/static/assets/img/uaz469.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/static/assets/img/vaz2110.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/static/assets/img/vazaura.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/services/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/services/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/stores/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/views/CatalogView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/CatalogView.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/views/LoginView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/LoginView.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/views/ProductDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/ProductDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/views/SupportView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/SupportView.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +69,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Python.run (1).executor&quot;: &quot;Run&quot;,
     &quot;Python.run.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
@@ -75,11 +87,34 @@
       <recent name="D:\study\bstu\4 course\WEB\web_project\backend\media" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\study\bstu\4 course\WEB\web_project\backend\static\assets\img" />
       <recent name="D:\study\bstu\4 course\WEB\web_project\backend\media" />
       <recent name="D:\study\bstu\4 course\WEB\web_project\backend\backend" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.run (1)">
+    <configuration name="run (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="web_project" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/backend/run.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="run" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="web_project" />
       <option name="ENV_FILES" value="" />
@@ -104,6 +139,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.run (1)" />
         <item itemvalue="Python.run" />
       </list>
     </recent_temporary>

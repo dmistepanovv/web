@@ -214,24 +214,25 @@ export default {
     },
 
     async handleSubmit() {
-      if (!this.validateForm()) return
+      if (!this.validateForm()) return // Проверяем форму перед отправкой
 
+      // Подготавливаем данные для отправки
       const credentials = this.showRegister
-          ? { ...this.form }
+          ? { ...this.form } // Для регистрации - все поля
           : {
             username: this.form.email,
             password: this.form.password
-          }
+          } // Для входа - только логин и пароль
 
       try {
         let result
         if (this.showRegister) {
-          result = await this.register(credentials)
+          result = await this.register(credentials) // POST запрос на регистрацию
         } else {
-          result = await this.login(credentials)
+          result = await this.login(credentials) // POST запрос на вход
         }
 
-        if (result.success) {
+        if (result.success) { // Если успешно
           this.successMessage = this.showRegister
               ? 'Регистрация прошла успешно! Добро пожаловать!'
               : 'Вход выполнен успешно!'

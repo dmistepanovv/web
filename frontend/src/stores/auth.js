@@ -1,6 +1,8 @@
-import { defineStore } from 'pinia';
+import { defineStore } from 'pinia'; // для создания хранилища состояния
 import { authService, authStorage } from '@/services/api';
 
+
+// Создание хранилища данных, доступные из любого компонента
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         user: authStorage.getUser(),
@@ -9,18 +11,23 @@ export const useAuthStore = defineStore('auth', {
         error: null
     }),
 
-    actions: {
+    actions: { // Методы хранилища
         async register(userData) {
             this.loading = true;
             this.error = null;
 
             try {
+                // Отправляем запрос на сервер
                 const response = await authService.register(userData);
+
+                // Получаем данные ответа
                 const { user, access, refresh } = response.data;
 
+                // Сохраняем в localStorage
                 authStorage.setTokens(access, refresh);
                 authStorage.setUser(user);
 
+                // Обновляем состояние хранилища
                 this.user = user;
                 this.isAuthenticated = true;
                 this.loading = false;
@@ -33,6 +40,7 @@ export const useAuthStore = defineStore('auth', {
             }
         },
 
+        // Такая же логика как выше, толь не создание, а вход
         async login(credentials) {
             this.loading = true;
             this.error = null;
@@ -71,7 +79,7 @@ export const useAuthStore = defineStore('auth', {
             }
         },
 
-        async checkAuth() {
+        async checkAuth() { // Проверка токена на авторизацию
             if (authStorage.getAccessToken()) {
                 try {
                     const response = await authService.getProfile();
@@ -88,7 +96,7 @@ export const useAuthStore = defineStore('auth', {
         }
     },
 
-    getters: {
+    getters: { // геттеры вычисляют значения на основе state
         getUser: (state) => state.user,
         isLoggedIn: (state) => state.isAuthenticated,
         isLoading: (state) => state.loading,

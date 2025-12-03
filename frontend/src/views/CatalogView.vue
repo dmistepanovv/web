@@ -106,7 +106,7 @@ import { productService } from '@/services/api'
 
 export default {
   name: 'CatalogView',
-  data() {
+  data() { // локальное состояние компонента
     return {
       loading: false,
       searchQuery: '',
@@ -115,15 +115,17 @@ export default {
       searchTimeout: null
     }
   },
-  computed: {
+  computed: { // вычисляемые значения (автоматический пересчет при изменении)
     filteredRussianProducts() {
+      // Фильтруем российские товары
       let products = this.allProducts.filter(p => p.category_type === 'russian')
 
+      // Если есть поисковый запрос - дополнительно фильтруем
       if (this.searchQuery) {
         products = this.filterProductsBySearch(products)
       }
 
-      return products
+      return products // Результат
     },
 
     filteredForeignProducts() {
@@ -154,19 +156,19 @@ export default {
       return this.filteredRussianProducts.length + this.filteredForeignProducts.length
     }
   },
-  async mounted() {
+  async mounted() { // выполняем при загрузке
     await this.loadProducts()
   },
   methods: {
     async loadProducts() {
-      this.loading = true
+      this.loading = true // индикатор загрузки
       try {
-        const response = await productService.getAllProducts()
-        this.allProducts = response.data
-      } catch (error) {
+        const response = await productService.getAllProducts() // GET запрос к серверу
+        this.allProducts = response.data // response.data - данные от сервера
+      } catch (error) { // Если ошибка
         console.error('Ошибка загрузки продуктов:', error)
-      } finally {
-        this.loading = false
+      } finally { // в любом случае
+        this.loading = false // Скрываем загрузку
       }
     },
 
@@ -180,7 +182,7 @@ export default {
 
     async performSearch() {
       if (!this.searchQuery) {
-        await this.loadProducts()
+        await this.loadProducts() // Если поиск пустой, загружаем все товары
         return
       }
 
@@ -228,7 +230,7 @@ export default {
     },
 
     handleImageError(event) {
-      event.target.src = '/src/assets/img/placeholder.jpg'
+      event.target.src = '/src/assets/img/car_error.jpg'
     }
   }
 }

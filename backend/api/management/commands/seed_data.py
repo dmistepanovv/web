@@ -30,7 +30,7 @@ class Command(BaseCommand):
             }
         )
         if created:
-            user.set_password('testpassword123')
+            user.set_password('testuser')
             user.save()
 
         # Создаем категории
@@ -58,8 +58,6 @@ class Command(BaseCommand):
                 'drive_type': 'Передний',
                 'image_url': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/VAZ_2101_BW_2016-09-03_13-51-58.jpg/1200px-VAZ_2101_BW_2016-09-03_13-51-58.jpg'
             },
-
-
             {
                 'name': 'ИЖ Планета-4',
                 'description': 'Культовый советский мотоцикл 1985 года. Надежный двигатель, классический дизайн. Полностью оригинальные детали, полная комплектация.',
